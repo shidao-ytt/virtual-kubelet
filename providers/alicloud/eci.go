@@ -594,9 +594,6 @@ func (p *ECIProvider) getContainers(pod *v1.Pod, init bool) ([]eci.CreateContain
 		cpuRequest := 1.00
 		if _, ok := container.Resources.Requests[v1.ResourceCPU]; ok {
 			cpuRequest = float64(container.Resources.Requests.Cpu().MilliValue()) / 1000.00
-			if cpuRequest < 0.01 {
-				cpuRequest = 0.01
-			}
 		}
 
 		c.Cpu = requests.Float(fmt.Sprintf("%.2f", cpuRequest))
@@ -605,9 +602,6 @@ func (p *ECIProvider) getContainers(pod *v1.Pod, init bool) ([]eci.CreateContain
 		memoryRequest := 2.0
 		if _, ok := container.Resources.Requests[v1.ResourceMemory]; ok {
 			memoryRequest = float64(container.Resources.Requests.Memory().Value()) / 1000000000.0
-			if memoryRequest < 2.0 {
-				memoryRequest = 2.0
-			}
 		}
 
 		c.Memory = requests.Float(fmt.Sprintf("%.1f", memoryRequest))
